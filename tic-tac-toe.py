@@ -16,6 +16,10 @@ cartoony_font = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 30)
 settings_button_font = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 15)
 title = title_font.render('Tic-Tac-Toe', True, lime)
 
+# Main Menu Music
+pygame.mixer.music.load(r"C:\Users\Admin\Downloads\19th Floor - Bobby Richards.mp3")
+pygame.mixer.music.play(-1)
+
 # Main menu buttons
 def game_button(x, y, length, width): 
     game_button = (x, y, length, width) # 70, 60, 200, 50
@@ -54,16 +58,20 @@ def main_menu(): # Create a Main Menu
     running = True
     button_y = 120
     while running:
+        # Background Color
         screen.fill((0,0,205))
+        # Title
         screen.blit(title, (73, 20))
+        # Rectangle Buttons
         game_button(69, button_y, 200, 50)
         help_button(69, button_y + 70, 200, 50)
+        # Circle Button
         settings_button(37, 305, 30)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.pos)
+                print(event.pos) # Don't forget to change this
         pygame.display.update()
 
 main_menu()
