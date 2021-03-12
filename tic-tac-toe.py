@@ -51,7 +51,45 @@ def tic_tac_toe():
         screen.blit(board, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+<<<<<<< Updated upstream
                 running = False
+=======
+                game_running = False
+        pygame.display.update()
+
+# Help Screen
+def help_screen():
+    help_running = True
+    while help_running: 
+        screen.fill(dodger_blue)
+        screen.blit(youtube_star_title.render('Instructions', True, lime), (74, 20))
+        instructions_text(70)
+        back_button(10, 278, 100, 50)gg
+        mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                help_running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                help_running = False
+                if mouse_pos_x >= 10 and mouse_pos_x <= 109 and mouse_pos_y >= 277 and mouse_pos_y <= 328:
+                    main_menu()
+        pygame.display.update()
+
+# Settings Screen
+def settings_screen():
+    settings_running = True
+    while settings_running:
+        screen.fill(dodger_blue)
+        back_button(10, 278, 100, 50)
+        mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                settings_running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                settings_running = False
+                if mouse_pos_x >= 10 and mouse_pos_x <= 109 and mouse_pos_y >= 277 and mouse_pos_y <= 328:
+                    main_menu()
+>>>>>>> Stashed changes
         pygame.display.update()
 
 def main_menu(): # Create a Main Menu
