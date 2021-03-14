@@ -27,14 +27,14 @@ def game_button(x, y, length, width, color):
     purpleish = (102, 102, 255)
     game_button = (x, y, length, width) # 70, 60, 200, 50
     game_button_text = cartoony_font.render('Play Game', True, lime)
-    pygame.draw.rect(screen, color, game_button)
-    screen.blit(game_button_text, (x + 38, y + 5))
+    pygame.draw.rect(screen, color, game_button, 0, 10)
+    screen.blit(game_button_text, (x + 40, y + 5))
 
 def help_button(x, y, length, width, color):
     purpleish1 = (102, 102, 255)
     help_button = (x, y, length, width) 
     help_button_text = cartoony_font.render('Help', True, lime)
-    pygame.draw.rect(screen, color, help_button)
+    pygame.draw.rect(screen, color, help_button, 0, 10)
     screen.blit(help_button_text, (x + 69, y + 5))
 
 def settings_button(x, y, radius, color):
@@ -42,12 +42,18 @@ def settings_button(x, y, radius, color):
     pygame.draw.circle(screen, color, (x, y), radius) # 27, 305, 30
     screen.blit(settings_button_text, (x - 25, y - 10))
 
-
 def back_button(x, y, length, width, color):
     back_button = (x, y, length, width) 
     back_button_text = cartoony_font.render('Back', True, lime)
-    pygame.draw.rect(screen, color, back_button)
+    pygame.draw.rect(screen, color, back_button, 0, 10)
     screen.blit(back_button_text, (x + 18, y + 6))
+
+
+def quit_button(x, y, length, width, color):
+    quit_button = (x, y, length, width)
+    quit_button_text = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render('Quit Game', True, lime)
+    pygame.draw.rect(screen, color, quit_button, 0, 10)
+    screen.blit(quit_button_text, (14, 303))
 
 # Instructions Text
 youtube_star_title = pygame.font.SysFont('youtube star', 40)
@@ -59,27 +65,41 @@ def instructions_text(y): # Continue to format the paragraph
         y += 20
         screen.blit(youtube_star_text.render(item, True, lime), (10, y))
 
-# Board
-board = pygame.image.load(r'C:\Users\Admin\OneDrive\Desktop\All Python Projects\Tic-tac-toe\All Images\ultimate-tic-tac-toe12-01.png')
-
-# Marks
-x_mark = pygame.image.load(r'C:\Users\Admin\OneDrive\Desktop\All Python Projects\Tic-tac-toe\All Images\close.png')
+def tic_tac_toe_line(start_pos_x, start_pos_y, end_pos_x, end_pos_y):
+    pygame.draw.line(screen, (0, 0, 0), (start_pos_x, start_pos_y), (end_pos_x, end_pos_y), 8)
 
 dodger_blue = (0, 0, 205)
-white = (255, 255, 255)
+white = (255, 255, 255) 
+
+def tic_tac_toe_board():
+    pygame.draw.rect(screen, dodger_blue, (0, 0, 340, 80))
+    # Vertical Lines
+    tic_tac_toe_line(340 * 1/3, 80, 340 * 1/3, 340)
+    tic_tac_toe_line(340 * 2/3, 80, 340 * 2/3, 340)
+    # Horizontal Lines
+    tic_tac_toe_line(0, (260 * 1/3) + 80 , 340, (260 * 1/3) + 80 )
+    tic_tac_toe_line(0, (260 * 2/3) + 80 , 340, (260 * 2/3) + 80 )
 
 # Tic_tac_toe Screen
 def tic_tac_toe():
     game_running = True
+    quit_button_changeable_color = (102, 102, 255)
+    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render('Welcome to Tic-Tac-Toe', True, lime)
+    mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
+    x_state = 'not ready'
     while game_running: 
         screen.fill(white)
-        screen.blit(board, (0, 0))
+        # Tic-Tac-Toe Board
+        tic_tac_toe_board()
+        screen.blit(tic_state, (80, 25))
+        #quit_button(10, 300, 93, 33, quit_button_changeable_color) Use quit button later if you need it 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                game_running = False
-                main_menu()
+                #print(pygame.mouse.get_pos())
+                if mouse_pos_x <= 108: # Fix the position here (108 not working)
+                    print(x_state)
         pygame.display.update()
 
 # Help Screen
@@ -142,7 +162,7 @@ def main_menu():
         # Background Color
         screen.fill((0, 0, 205))
         # Title
-        screen.blit(title, (73, 20))
+        screen.blit(title, (77, 20))
         # Rectangle Buttons
         game_button(69, button_y, button_length, button_width, game_button_changeable_color)
         help_button(69, button_y + 70, button_length, button_width, help_button_changeable_color)
