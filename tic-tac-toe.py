@@ -144,6 +144,7 @@ def win_check(array):
     elif array[0] == 'O' and array[4] == 'O' and array[8] == 'O':
         return 'O Won'
 
+winning = ''
 # Tic_tac_toe Screen
 def tic_tac_toe():
     game_running = True
@@ -155,13 +156,13 @@ def tic_tac_toe():
     global o_image_state1, o_image_state2, o_image_state3, o_image_state4
     global o_image_state5, o_image_state6, o_image_state7, o_image_state8, o_image_state9
     global board_arr
+    global winning
     while game_running: 
         mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
         screen.fill(white)
-        #occupied = True
         # Tic-Tac-Toe Board
         tic_tac_toe_board()
-        screen.blit(tic_state, (80, 25))
+        screen.blit(tic_state, (124, 25))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
@@ -304,15 +305,79 @@ def tic_tac_toe():
 
         # Win Check
         if win_check(board_arr) == 'X Won':
+            x_image_state1 = 'not ready'
+            x_image_state2 = 'not ready'
+            x_image_state3 = 'not ready'
+            x_image_state4 = 'not ready'
+            x_image_state5 = 'not ready'
+            x_image_state6 = 'not ready'
+            x_image_state7 = 'not ready'
+            x_image_state8 = 'not ready'
+            x_image_state9 = 'not ready'
+
+            o_image_state1 = 'not ready'
+            o_image_state2 = 'not ready'
+            o_image_state3 = 'not ready'
+            o_image_state4 = 'not ready'
+            o_image_state5 = 'not ready'
+            o_image_state6 = 'not ready'
+            o_image_state7 = 'not ready'
+            o_image_state8 = 'not ready'
+            o_image_state9 = 'not ready'
+            board_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+            winning = 'X Won'
             winning_screen()
             game_running = False
+
         elif win_check(board_arr) == 'O Won':
+            x_image_state1 = 'not ready'
+            x_image_state2 = 'not ready'
+            x_image_state3 = 'not ready'
+            x_image_state4 = 'not ready'
+            x_image_state5 = 'not ready'
+            x_image_state6 = 'not ready'
+            x_image_state7 = 'not ready'
+            x_image_state8 = 'not ready'
+            x_image_state9 = 'not ready'
+
+            o_image_state1 = 'not ready'
+            o_image_state2 = 'not ready'
+            o_image_state3 = 'not ready'
+            o_image_state4 = 'not ready'
+            o_image_state5 = 'not ready'
+            o_image_state6 = 'not ready'
+            o_image_state7 = 'not ready'
+            o_image_state8 = 'not ready'
+            o_image_state9 = 'not ready'
+            board_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+            winning = 'O Won'
             winning_screen()
             game_running = False
         # Draw Check
         else:
             if ' ' not in board_arr:
-                break
+                x_image_state1 = 'not ready'
+                x_image_state2 = 'not ready'
+                x_image_state3 = 'not ready'
+                x_image_state4 = 'not ready'
+                x_image_state5 = 'not ready'
+                x_image_state6 = 'not ready'
+                x_image_state7 = 'not ready'
+                x_image_state8 = 'not ready'
+                x_image_state9 = 'not ready'
+
+                o_image_state1 = 'not ready'
+                o_image_state2 = 'not ready'
+                o_image_state3 = 'not ready'
+                o_image_state4 = 'not ready'
+                o_image_state5 = 'not ready'
+                o_image_state6 = 'not ready'
+                o_image_state7 = 'not ready'
+                o_image_state8 = 'not ready'
+                o_image_state9 = 'not ready'
+                board_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+                draw_screen()
+                game_running = False
         pygame.display.update()
 
 def winning_screen():
@@ -321,9 +386,8 @@ def winning_screen():
     global board_arr
     while winning_running:
         screen.fill((255,215,0))
-        screen.blit(pygame.font.Font('C:\WINDOWS\Fonts\IMPACT.TTF', 40).render(win_check(board_arr), True, (0, 0, 0)), (120, 130))
+        screen.blit(pygame.font.Font('C:\WINDOWS\Fonts\IMPACT.TTF', 40).render(winning, True, (0, 0, 0)), (120, 130))
         quit_button(10, 300, 93, 33, quit_button_changeable_color)
-        board_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '] # Try to Replay the Game
         mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -334,6 +398,22 @@ def winning_screen():
                     main_menu()
         pygame.display.update()
 
+def draw_screen():
+    draw_running = True
+    quit_button_changeable_color = (102, 102, 255)
+    while draw_running:
+        screen.fill((128,128,128))
+        screen.blit(pygame.font.Font('C:\WINDOWS\Fonts\IMPACT.TTF', 40).render('Draw', True, (0, 0, 0)), (120, 130))
+        quit_button(10, 300, 93, 33, quit_button_changeable_color)
+        mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                winning_running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if mouse_pos_x >= 11 and mouse_pos_x <= 103 and mouse_pos_y >= 299 and mouse_pos_y <= 330:
+                    draw_running = False
+                    main_menu()
+        pygame.display.update()
 
 # Help Screen
 def help_screen():
