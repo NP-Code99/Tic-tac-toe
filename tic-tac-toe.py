@@ -17,7 +17,7 @@ settings_button_font = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 15)
 title = title_font.render('Tic-Tac-Toe', True, lime)
 
 # Main Menu Music
-pygame.mixer.music.load(r"C:\Users\Admin\Downloads\19th Floor - Bobby Richards.mp3")
+pygame.mixer.music.load(r"C:\Users\Admin\OneDrive\Desktop\All Python Projects\Tic-tac-toe\Sounds\19th Floor - Bobby Richards (1).mp3")
 pygame.mixer.music.play(-1)
 
 # Buttons
@@ -51,9 +51,9 @@ def back_button(x, y, length, width, color):
 
 def quit_button(x, y, length, width, color):
     quit_button = (x, y, length, width)
-    quit_button_text = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render('Quit Game', True, lime)
+    quit_button_text = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render('Replay', True, lime)
     pygame.draw.rect(screen, color, quit_button, 0, 10)
-    screen.blit(quit_button_text, (14, 303))
+    screen.blit(quit_button_text, (27, 303))
 
 # Instructions Text
 youtube_star_title = pygame.font.SysFont('youtube star', 40)
@@ -80,27 +80,260 @@ def tic_tac_toe_board():
     tic_tac_toe_line(0, (260 * 1/3) + 80 , 340, (260 * 1/3) + 80 )
     tic_tac_toe_line(0, (260 * 2/3) + 80 , 340, (260 * 2/3) + 80 )
 
+def o_image(x, y):
+    pygame.draw.circle(screen, (0, 0, 0), (x, y), 35, 10) #45, 120
+
+def x_image(x, y):
+    pygame.draw.line(screen, (0, 0, 0), (x, y), (x + 50, y + 50), 10) #(27, 95), (77, 145)
+    pygame.draw.line(screen, (0, 0, 0), (x + 50, y), (x + 2, y + 50), 10) #(77, 95), (29, 145)
+
+# State Variables
+x_image_state1 = 'not ready'
+x_image_state2 = 'not ready'
+x_image_state3 = 'not ready'
+x_image_state4 = 'not ready'
+x_image_state5 = 'not ready'
+x_image_state6 = 'not ready'
+x_image_state7 = 'not ready'
+x_image_state8 = 'not ready'
+x_image_state9 = 'not ready'
+o_image_state1 = 'not ready'
+o_image_state2 = 'not ready'
+o_image_state3 = 'not ready'
+o_image_state4 = 'not ready'
+o_image_state5 = 'not ready'
+o_image_state6 = 'not ready'
+o_image_state7 = 'not ready'
+o_image_state8 = 'not ready'
+o_image_state9 = 'not ready'
+
+board_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+
+def win_check(array):
+    if array[0] == 'X' and array[1] == 'X' and array[2] == 'X':
+        return 'X Won'
+    elif array[3] == 'X' and array[4] == 'X' and array[5] == 'X':
+        return 'X Won'
+    elif array[6] == 'X' and array[7] == 'X' and array[8] == 'X':
+        return 'X Won'
+    elif array[0] == 'X' and array[3] == 'X' and array[6] == 'X':
+        return 'X Won'
+    elif array[1] == 'X' and array[4] == 'X' and array[7] == 'X':
+        return 'X Won'
+    elif array[2] == 'X' and array[5] == 'X' and array[8] == 'X':
+        return 'X Won'
+    elif array[2] == 'X' and array[4] == 'X' and array[6] == 'X':
+        return 'X Won'
+    elif array[0] == 'X' and array[4] == 'X' and array[8] == 'X':
+        return 'X Won'
+    
+    if array[0] == 'O' and array[1] == 'O' and array[2] == 'O':
+        return 'O Won'
+    elif array[3] == 'O' and array[4] == 'O' and array[5] == 'O':
+        return 'O Won'
+    elif array[6] == 'O' and array[7] == 'O' and array[8] == 'O':
+        return 'O Won'
+    elif array[0] == 'O' and array[3] == 'O' and array[6] == 'O':
+        return 'O Won'
+    elif array[1] == 'O' and array[4] == 'O' and array[7] == 'O':
+        return 'O Won'
+    elif array[2] == 'O' and array[5] == 'O' and array[8] == 'O':
+        return 'O Won'
+    elif array[2] == 'O' and array[4] == 'O' and array[6] == 'O':
+        return 'O Won'
+    elif array[0] == 'O' and array[4] == 'O' and array[8] == 'O':
+        return 'O Won'
+
 # Tic_tac_toe Screen
 def tic_tac_toe():
     game_running = True
-    quit_button_changeable_color = (102, 102, 255)
-    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render('Welcome to Tic-Tac-Toe', True, lime)
-    mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
-    x_state = 'not ready'
+    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+    tic_num = 0
+    # Globalizing all the state variables
+    global x_image_state1, x_image_state2, x_image_state3, x_image_state4
+    global x_image_state5, x_image_state6, x_image_state7, x_image_state8, x_image_state9
+    global o_image_state1, o_image_state2, o_image_state3, o_image_state4
+    global o_image_state5, o_image_state6, o_image_state7, o_image_state8, o_image_state9
+    global board_arr
     while game_running: 
+        mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
         screen.fill(white)
+        #occupied = True
         # Tic-Tac-Toe Board
         tic_tac_toe_board()
         screen.blit(tic_state, (80, 25))
-        #quit_button(10, 300, 93, 33, quit_button_changeable_color) Use quit button later if you need it 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                #print(pygame.mouse.get_pos())
-                if mouse_pos_x <= 108: # Fix the position here (108 not working)
-                    print(x_state)
+            # Mouse Button Event for Player X
+            if event.type == pygame.MOUSEBUTTONDOWN and tic_num % 2 == 0:
+                # All positions for each box
+                if mouse_pos_x >= 0 and mouse_pos_x <= 111 and mouse_pos_y >= 79 and mouse_pos_y <= 163 and board_arr[0] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime) 
+                    tic_num += 1
+                    occupied = True
+                    x_image_state1 = 'ready'
+                elif mouse_pos_x >= 119 and mouse_pos_x <= 223 and mouse_pos_y >= 79 and mouse_pos_y <= 163 and board_arr[1] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state2 = 'ready'
+                elif mouse_pos_x >= 230 and mouse_pos_x <= 339 and mouse_pos_y >= 79 and mouse_pos_y <= 163 and board_arr[2] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state3 = 'ready'
+                elif mouse_pos_x >= 0 and mouse_pos_x <= 111 and mouse_pos_y >= 170 and mouse_pos_y <= 248 and board_arr[3] == ' ': 
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state4 = 'ready'
+                elif mouse_pos_x >= 119 and mouse_pos_x <= 223 and mouse_pos_y >= 170 and mouse_pos_y <= 248 and board_arr[4] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state5 = 'ready'
+                elif mouse_pos_x >= 230 and mouse_pos_x <= 339 and mouse_pos_y >= 170 and mouse_pos_y <= 248 and board_arr[5] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state6 = 'ready'
+                elif mouse_pos_x >= 0 and mouse_pos_x <= 111 and mouse_pos_y >= 258 and mouse_pos_y <= 339 and board_arr[6] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state7 = 'ready'
+                elif mouse_pos_x >= 119 and mouse_pos_x <= 223 and mouse_pos_y >= 258 and mouse_pos_y <= 339 and board_arr[7] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state8 = 'ready'
+                elif mouse_pos_x >= 230 and mouse_pos_x <= 339 and mouse_pos_y >= 258 and mouse_pos_y <= 339 and board_arr[8] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's O's Turn", True, lime)
+                    tic_num += 1
+                    x_image_state9 = 'ready'
+            # Mouse Button Event for Player O
+            elif event.type == pygame.MOUSEBUTTONDOWN and tic_num % 2 == 1:
+                # All positions for each box
+                if mouse_pos_x >= 0 and mouse_pos_x <= 111 and mouse_pos_y >= 79 and mouse_pos_y <= 163 and board_arr[0] == ' ': # This will make sure you can't click on it after occupied 
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state1 = 'ready'
+                elif mouse_pos_x >= 119 and mouse_pos_x <= 223 and mouse_pos_y >= 79 and mouse_pos_y <= 163 and board_arr[1] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state2 = 'ready'
+                elif mouse_pos_x >= 230 and mouse_pos_x <= 339 and mouse_pos_y >= 79 and mouse_pos_y <= 163 and board_arr[2] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state3 = 'ready'
+                elif mouse_pos_x >= 0 and mouse_pos_x <= 111 and mouse_pos_y >= 170 and mouse_pos_y <= 248 and board_arr[3] == ' ': 
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state4 = 'ready'
+                elif mouse_pos_x >= 119 and mouse_pos_x <= 223 and mouse_pos_y >= 170 and mouse_pos_y <= 248 and board_arr[4] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state5 = 'ready'
+                elif mouse_pos_x >= 230 and mouse_pos_x <= 339 and mouse_pos_y >= 170 and mouse_pos_y <= 248 and board_arr[5] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state6 = 'ready'
+                elif mouse_pos_x >= 0 and mouse_pos_x <= 111 and mouse_pos_y >= 258 and mouse_pos_y <= 339 and board_arr[6] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state7 = 'ready'
+                elif mouse_pos_x >= 119 and mouse_pos_x <= 223 and mouse_pos_y >= 258 and mouse_pos_y <= 339 and board_arr[7] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state8 = 'ready'
+                elif mouse_pos_x >= 230 and mouse_pos_x <= 339 and mouse_pos_y >= 258 and mouse_pos_y <= 339 and board_arr[8] == ' ':
+                    tic_state = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render("It's X's Turn", True, lime)
+                    tic_num += 1
+                    o_image_state9 = 'ready'
+
+        # Placing X's or O's
+        if x_image_state1 == 'ready' and board_arr[0] == ' ' or board_arr[0] == 'X': # Make sure O and X don't go on the same box
+            x_image(27, 95)
+            board_arr[0] = 'X'
+        if x_image_state2 == 'ready' and board_arr[1] == ' ' or board_arr[1] == 'X':
+            x_image(144, 95)
+            board_arr[1] = 'X'
+        if x_image_state3 == 'ready' and board_arr[2] == ' ' or board_arr[2] == 'X': # Use this method (Make new variable for each)
+            x_image(261, 95)
+            board_arr[2] = 'X'
+        if x_image_state4 == 'ready' and board_arr[3] == ' ' or board_arr[3] == 'X':
+            x_image(27, 185)
+            board_arr[3] = 'X'
+        if x_image_state5 == 'ready' and board_arr[4] == ' ' or board_arr[4] == 'X':
+            x_image(144, 185)
+            board_arr[4] = 'X'
+        if x_image_state6 == 'ready' and board_arr[5] == ' ' or board_arr[5] == 'X':
+            x_image(261, 185)
+            board_arr[5] = 'X'
+        if x_image_state7 == 'ready' and board_arr[6] == ' ' or board_arr[6] == 'X':
+            x_image(27, 275)
+            board_arr[6] = 'X'
+        if x_image_state8 == 'ready' and board_arr[7] == ' ' or board_arr[7] == 'X':
+            x_image(144, 275)
+            board_arr[7] = 'X'
+        if x_image_state9 == 'ready' and board_arr[8] == ' ' or board_arr[8] == 'X':
+            x_image(261, 275)
+            board_arr[8] = 'X'
+
+        if o_image_state1 == 'ready' and board_arr[0] == ' ' or board_arr[0] == 'O':
+            o_image(50, 120)
+            board_arr[0] = 'O'
+        if o_image_state2 == 'ready' and board_arr[1] == ' ' or board_arr[1] == 'O':
+            o_image(170, 120)
+            board_arr[1] = 'O'
+        if o_image_state3 == 'ready' and board_arr[2] == ' ' or board_arr[2] == 'O':
+            o_image(295, 120)
+            board_arr[2] = 'O'
+        if o_image_state4 == 'ready' and board_arr[3] == ' ' or board_arr[3] == 'O':
+            o_image(50, 210)
+            board_arr[3] = 'O'
+        if o_image_state5 == 'ready' and board_arr[4] == ' ' or board_arr[4] == 'O':
+            o_image(170, 210)
+            board_arr[4] = 'O'
+        if o_image_state6 == 'ready' and board_arr[5] == ' ' or board_arr[5] == 'O':
+            o_image(295, 210)
+            board_arr[5] = 'O'
+        if o_image_state7 == 'ready' and board_arr[6] == ' ' or board_arr[6] == 'O':
+            o_image(50, 300)
+            board_arr[6] = 'O'
+        if o_image_state8 == 'ready' and board_arr[7] == ' ' or board_arr[7] == 'O':
+            o_image(170, 300)
+            board_arr[7] = 'O'
+        if o_image_state9 == 'ready' and board_arr[8] == ' ' or board_arr[8] == 'O':
+            o_image(295, 300)
+            board_arr[8] = 'O'
+
+        # Win Check
+        if win_check(board_arr) == 'X Won':
+            winning_screen()
+            game_running = False
+        elif win_check(board_arr) == 'O Won':
+            winning_screen()
+            game_running = False
+        # Draw Check
+        else:
+            if ' ' not in board_arr:
+                break
         pygame.display.update()
+
+def winning_screen():
+    winning_running = True
+    quit_button_changeable_color = (102, 102, 255)
+    global board_arr
+    while winning_running:
+        screen.fill((255,215,0))
+        screen.blit(pygame.font.Font('C:\WINDOWS\Fonts\IMPACT.TTF', 40).render(win_check(board_arr), True, (0, 0, 0)), (120, 130))
+        quit_button(10, 300, 93, 33, quit_button_changeable_color)
+        board_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '] # Try to Replay the Game
+        mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                winning_running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if mouse_pos_x >= 11 and mouse_pos_x <= 103 and mouse_pos_y >= 299 and mouse_pos_y <= 330:
+                    winning_running = False
+                    main_menu()
+        pygame.display.update()
+
 
 # Help Screen
 def help_screen():
