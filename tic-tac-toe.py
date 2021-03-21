@@ -52,9 +52,27 @@ def back_button(x, y, length, width, color):
 def quit_button(x, y, length, width, color):
     quit_button = (x, y, length, width)
     quit_button_text = pygame.font.Font(r'C:\WINDOWS\Fonts\IMPACT.TTF', 20).render('Replay', True, lime)
-    pygame.draw.rect(screen, color, quit_button, 0, 10)
+    pygame.draw.rect(screen, color, quit_button)
     screen.blit(quit_button_text, (27, 303))
 
+def theme_dropdown(x, y, length, width, color):
+    theme_dropdown = (x, y, length, width) 
+    theme_dropdown_text = pygame.font.SysFont('impact', 20).render('Select Theme', True, lime)
+    pygame.draw.rect(screen, color, theme_dropdown, 0, 8)
+    screen.blit(theme_dropdown_text, (x + 5, y + 2))
+
+def theme_color_buttons(x, y, length, width, color, colortype):
+    theme_color_buttons = (x, y, length, width) 
+    theme_color_buttons_text = pygame.font.SysFont('youtube star', 20).render(colortype, True, (0, 0, 0))
+    pygame.draw.rect(screen, color, theme_color_buttons, 0, 8)
+    if colortype == 'Red':
+        screen.blit(theme_color_buttons_text, (x + 45, y + 8))
+    elif colortype == 'Purple' or colortype == 'Orange':
+        screen.blit(theme_color_buttons_text, (x + 40, y + 8))
+    else:
+        screen.blit(theme_color_buttons_text, (x + 20, y + 8) )
+
+screen_theme = (0, 0, 205)
 # Instructions Text
 youtube_star_title = pygame.font.SysFont('youtube star', 40)
 youtube_star_title.set_bold(True)
@@ -68,11 +86,10 @@ def instructions_text(y): # Continue to format the paragraph
 def tic_tac_toe_line(start_pos_x, start_pos_y, end_pos_x, end_pos_y):
     pygame.draw.line(screen, (0, 0, 0), (start_pos_x, start_pos_y), (end_pos_x, end_pos_y), 8)
 
-dodger_blue = (0, 0, 205)
 white = (255, 255, 255) 
 
 def tic_tac_toe_board():
-    pygame.draw.rect(screen, dodger_blue, (0, 0, 340, 80))
+    pygame.draw.rect(screen, screen_theme, (0, 0, 340, 80))
     # Vertical Lines
     tic_tac_toe_line(340 * 1/3, 80, 340 * 1/3, 340)
     tic_tac_toe_line(340 * 2/3, 80, 340 * 2/3, 340)
@@ -419,8 +436,9 @@ def draw_screen():
 def help_screen():
     help_running = True
     back_button_changeable_color = (102, 102, 255)
+    global screen_theme
     while help_running: 
-        screen.fill(dodger_blue)
+        screen.fill(screen_theme)
         screen.blit(youtube_star_title.render('Instructions', True, lime), (74, 20))
         instructions_text(70)
         back_button(10, 278, 100, 50, back_button_changeable_color)
@@ -440,13 +458,17 @@ def help_screen():
         pygame.display.update()
 
 # Settings Screen
+state = 'not ready'
 def settings_screen():
     settings_running = True
+    theme_dropdown_changeable_color = (102, 102, 255) 
     back_button_changeable_color = (102, 102, 255)
+    global state
+    global screen_theme
     while settings_running:
-        screen.fill(dodger_blue)
+        screen.fill(screen_theme)
         screen.blit(youtube_star_title.render('Settings', True, lime), (106, 20))
-        screen.blit(pygame.font.SysFont('youtube star', 22).render('Theme', True, lime), (80,100))
+        theme_dropdown(60, 90, 120, 30, theme_dropdown_changeable_color)
         back_button(10, 278, 100, 50, back_button_changeable_color)
         mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
         for event in pygame.event.get():
@@ -456,11 +478,36 @@ def settings_screen():
                 if mouse_pos_x >= 10 and mouse_pos_x <= 109 and mouse_pos_y >= 277 and mouse_pos_y <= 328:
                     settings_running = False
                     main_menu()
+                elif mouse_pos_x >= 60 and mouse_pos_x <= 159 and mouse_pos_y >= 91 and mouse_pos_y <= 119:
+                    state = 'ready'
+                elif mouse_pos_x >= 60 and mouse_pos_x <= 180 and mouse_pos_y >= 120 and mouse_pos_y <= 149:
+                    screen_theme = (255, 0, 0)
+                elif mouse_pos_x >= 59 and mouse_pos_x <= 179 and mouse_pos_y >= 149 and mouse_pos_y <= 178:
+                    screen_theme = (255,165,0)
+                elif mouse_pos_x >= 61 and mouse_pos_x <= 178 and mouse_pos_y >= 179 and mouse_pos_y <= 208:
+                    screen_theme = (147,112,219)
+                elif mouse_pos_x >= 60 and mouse_pos_x <= 180 and mouse_pos_y >= 210 and mouse_pos_y <= 238:
+                    screen_theme = (0, 0, 205)
+                else: 
+                    state = 'not ready'
         # Back Button Color Changing
         if mouse_pos_x >= 10 and mouse_pos_x <= 109 and mouse_pos_y >= 277 and mouse_pos_y <= 328:
             back_button_changeable_color = (65, 105, 225)
         else: 
             back_button_changeable_color = (102, 102, 255)
+
+        # Theme Button Color Changing 
+        if mouse_pos_x >= 60 and mouse_pos_x <= 159 and mouse_pos_y >= 91 and mouse_pos_y <= 119:
+            theme_dropdown_changeable_color = (65, 105, 225)
+        else:
+            theme_dropdown_changeable_color = (102, 102, 255) 
+        
+        # Theme DropDown Buttons
+        if state == 'ready':
+            theme_color_buttons(60, 120, 120, 30, (255, 0, 0), 'Red')
+            theme_color_buttons(60, 150, 120, 30, (255,165,0), 'Orange')
+            theme_color_buttons(60, 180, 120, 30, (147,112,219), 'Purple')
+            theme_color_buttons(60, 210, 120, 30, (0, 0, 205), 'Dodger Blue')
         pygame.display.update()
 
 # Main Menu Screen
@@ -471,9 +518,10 @@ def main_menu():
     main_running = True
     button_y = 120
     cursor = pygame.cursors.compile(pygame.cursors.textmarker_strings)
+    global screen_theme
     while main_running:
         # Background Color
-        screen.fill((0, 0, 205))
+        screen.fill(screen_theme)
         # Title
         screen.blit(title, (77, 20))
         # Rectangle Buttons
@@ -513,7 +561,8 @@ def main_menu():
             settings_button_changeable_color = (102, 102, 255)
         pygame.display.update()
 
-main_menu()
+if __name__ == "__main__":
+    main_menu()
 
 
 
