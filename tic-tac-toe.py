@@ -425,7 +425,7 @@ def draw_screen():
         mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                winning_running = False
+                draw_running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if mouse_pos_x >= 11 and mouse_pos_x <= 103 and mouse_pos_y >= 299 and mouse_pos_y <= 330:
                     draw_running = False
