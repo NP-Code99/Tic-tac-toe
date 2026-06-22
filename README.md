@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,19&height=180&section=header&text=Tic-Tac-Toe&fontSize=52&fontColor=fff&animation=twinkling&fontAlignY=36&desc=2-Player%20Python%20Game%20with%20GUI%2C%20Sounds%20%26%20Unit%20Tests&descSize=16&descAlignY=58&descColor=bfdbfe" width="100%"/>
+# 🎮 Tic-Tac-Toe
+### 2-Player Python Game with GUI, Sounds & Unit Tests
 
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Pygame](https://img.shields.io/badge/Pygame-000000?style=for-the-badge&logo=python&logoColor=white)](https://pygame.org)
@@ -100,6 +101,6 @@ python tic_tac_toe_test.py
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/nandan-pullakandam)
 [![GitHub](https://img.shields.io/badge/GitHub-171515?style=flat-square&logo=github&logoColor=white)](https://github.com/NP-Code99)
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,19&height=100&section=footer" width="100%"/>
+
 
 </div>
